@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────── Design tokens (RGB triplets so Tailwind can apply alpha) ───────── */
+:root {
+  --bg: 245 247 250;          /* cool paper */
+  --surface: 255 255 255;
+  --surface-2: 236 241 247;
+  --ink: 19 36 59;            /* navy ink */
+  --muted: 92 108 130;
+  --line: 219 227 236;
+  --brand: 31 127 198;        /* groove blue (logo) */
+  --brand-deep: 27 75 132;    /* cart navy (logo) */
+  --brand-soft: 223 238 250;
+  --accent: 240 103 43;       /* print orange (logo) */
+  --accent-soft: 254 234 223;
+  --success: 22 150 96;
+  --warning: 206 138 12;
+  --danger: 214 57 57;
+  --shadow: 19 36 59;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: 11 21 36;
+  --surface: 17 31 52;
+  --surface-2: 24 41 67;
+  --ink: 230 237 246;
+  --muted: 148 165 188;
+  --line: 36 56 86;
+  --brand: 84 170 235;
+  --brand-deep: 150 196 240;
+  --brand-soft: 25 52 86;
+  --accent: 255 131 77;
+  --accent-soft: 64 38 30;
+  --success: 52 200 132;
+  --warning: 240 180 60;
+  --danger: 244 102 102;
+  --shadow: 0 0 0;
+  color-scheme: dark;
+}
+
+@layer base {
+  html { -webkit-tap-highlight-color: transparent; }
+  body {
+    @apply bg-bg text-ink font-sans antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  h1, h2, h3, h4 { @apply font-display tracking-tight; }
+  ::selection { background: rgb(var(--accent) / 0.25); }
+  :focus-visible { outline: 2px solid rgb(var(--brand)); outline-offset: 2px; border-radius: 6px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-[10px] px-4 py-2.5 text-sm font-semibold
+      transition-colors disabled:cursor-not-allowed disabled:opacity-55 whitespace-nowrap select-none;
+  }
+  .btn-primary { @apply btn bg-accent text-white hover:bg-accent/90; }
+  .btn-brand { @apply btn bg-brand text-white hover:bg-brand/90; }
+  .btn-ink { @apply btn bg-ink text-bg hover:bg-ink/90; }
+  .btn-outline { @apply btn border border-line bg-surface text-ink hover:border-ink/40; }
+  .btn-ghost { @apply btn text-ink hover:bg-surface-2; }
+  .btn-danger { @apply btn bg-danger text-white hover:bg-danger/90; }
+  .btn-sm { @apply px-3 py-1.5 text-xs rounded-lg; }
+  .btn-lg { @apply px-6 py-3.5 text-base; }
+  .btn-icon { @apply inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted hover:bg-surface-2 hover:text-ink transition-colors; }
+
+  .field-label { @apply mb-1.5 block text-sm font-semibold text-ink; }
+  .field-hint { @apply mt-1.5 text-xs text-muted; }
+  .field-error { @apply mt-1.5 text-xs font-medium text-danger; }
+  .input {
+    @apply w-full rounded-[10px] border border-line bg-surface px-3.5 py-2.5 text-sm text-ink
+      placeholder:text-muted/70 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15
+      disabled:opacity-60;
+  }
+  .card { @apply rounded-2xl border border-line bg-surface; }
+  .panel { @apply rounded-2xl border border-line bg-surface p-5 sm:p-6; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-muted; }
+  .link { @apply font-semibold text-brand hover:underline underline-offset-4; }
+
+  /* Print-shop motifs */
+  .halftone {
+    background-image: radial-gradient(rgb(var(--brand) / 0.28) 1.2px, transparent 1.6px);
+    background-size: 12px 12px;
+  }
+  .halftone-accent {
+    background-image: radial-gradient(rgb(var(--accent) / 0.35) 1.4px, transparent 1.8px);
+    background-size: 10px 10px;
+  }
+  .stitch { background-image: linear-gradient(90deg, rgb(var(--line)) 50%, transparent 50%); background-size: 10px 1px; height: 1px; }
+}
+
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: rgb(var(--line)); border-radius: 8px; }
+  .text-balance { text-wrap: balance; }
+}
